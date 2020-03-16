@@ -40,6 +40,7 @@ RUN stack --resolver lts-15.4 install \
   foreign-store \
   gravatar \
   hinotify \
+  hlint \
   hspec \
   http-conduit \
   mime-mail \
