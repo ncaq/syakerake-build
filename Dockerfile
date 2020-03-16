@@ -19,3 +19,64 @@ RUN apt-get update && apt-get install -y \
   zlib1g-dev \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
+# CircleCIでは時間がかかりビルドに失敗する可能性すらあるパッケージをインストール
+RUN stack --resolver lts-15.4 install \
+  Cabal \
+  QuickCheck \
+  aeson \
+  blaze-html \
+  bytestring \
+  cassava \
+  classy-prelude \
+  classy-prelude-yesod \
+  conduit \
+  containers \
+  directory \
+  email-validate \
+  esqueleto \
+  fast-logger \
+  file-embed \
+  filepath \
+  foreign-store \
+  gravatar \
+  hinotify \
+  hspec \
+  http-conduit \
+  mime-mail \
+  monad-logger \
+  mtl \
+  network \
+  pandoc \
+  pandoc-types \
+  persistent \
+  persistent-postgresql \
+  persistent-template \
+  pretty-simple \
+  process \
+  regex-compat-tdfa \
+  shakespeare \
+  string-transform \
+  template-haskell \
+  text \
+  time \
+  transformers \
+  unicode-show \
+  unicode-transforms \
+  unordered-containers \
+  uuid \
+  vector \
+  wai \
+  wai-extra \
+  wai-logger \
+  warp \
+  xml-conduit \
+  xss-sanitize \
+  yaml \
+  yesod \
+  yesod-auth \
+  yesod-core \
+  yesod-form \
+  yesod-newsfeed \
+  yesod-sitemap \
+  yesod-static \
+  yesod-test
