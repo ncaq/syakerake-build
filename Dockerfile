@@ -1,24 +1,37 @@
-FROM fpco/stack-build-small
+FROM ubuntu:xenial
+# UTF-8を有効化
+ENV LC_ALL C.UTF-8
 # apt-getの対話プロンプトを無効化
 ENV DEBIAN_FRONTEND noninteractive
-# stack-build-smallにはcurlが入っていない
-RUN apt-get update && apt-get install -y curl
-# nodeを登録
+# Nodeなどを取得するためにcurlが必要
+RUN apt-get update && apt-get install -y curl && apt-get clean && rm -rf /var/lib/apt/lists/*
+# Nodeを登録
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-# yarnを登録
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-# 必要なパッケージをインストール
+# Yarnを登録
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+# StackとCIに必要になるパッケージをインストール
 RUN apt-get update && apt-get install -y \
+  gcc \
+  git \
+  libc6-dev \
+  libffi-dev \
+  libgmp-dev \
   libpam-cracklib \
   libpq-dev \
   libssl-dev \
+  libtinfo-dev \
+  make \
+  netbase \
   nodejs \
   nullmailer \
+  xz-utils \
   yarn \
   zlib1g-dev \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
+# Stackをインストール
+RUN curl -sSL https://get.haskellstack.org/ | sh
 # CircleCIでは時間がかかりビルドに失敗する可能性すらあるパッケージをインストール
 RUN stack --resolver lts-15.4 install \
   Cabal \
