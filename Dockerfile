@@ -1,8 +1,6 @@
 FROM ubuntu:xenial
-# UTF-8を有効化
-ENV LC_ALL C.UTF-8
-# apt-getの対話プロンプトを無効化
-ENV DEBIAN_FRONTEND noninteractive
+# UTF-8を有効化, PATHを通す, apt-getの対話プロンプトを無効化
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 PATH=/root/.local/bin:$PATH DEBIAN_FRONTEND=noninteractive
 # Nodeなどを取得するためにcurlが必要
 RUN apt-get update && apt-get install -y curl && apt-get clean && rm -rf /var/lib/apt/lists/*
 # Nodeを登録
